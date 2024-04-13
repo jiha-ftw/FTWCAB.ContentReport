@@ -1,0 +1,20 @@
+﻿@using EPiServer.Framework.Web.Resources
+@using EPiServer.Shell.Navigation
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Content Report</title>
+    @ClientResources.RenderResources("admin", new[] { ClientResourceType.Style })
+    @Html.RequiredClientResources("Header")
+</head>
+<body>
+    @Html.AntiForgeryToken()
+    @Html.CreatePlatformNavigationMenu()
+    <div id="root" @Html.ApplyPlatformNavigation()>
+        @RenderBody()
+    </div>
+
+    @Html.RequiredClientResources("Footer")
+</body>
+</html>

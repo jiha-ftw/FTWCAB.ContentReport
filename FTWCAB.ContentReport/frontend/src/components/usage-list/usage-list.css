@@ -1,0 +1,61 @@
+.usage-list-overlay {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 0 50px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.usage-list__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.usage-list__header > span {
+    cursor: pointer;
+}
+
+.usage-list-overlay--hidden {
+    visibility: hidden;
+}
+
+.usage-list-overlay__content {
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    min-height: 50vh;
+
+    background: #fff;
+    padding: 50px 20px 30px;
+    border-radius: 3px;
+    cursor: default;
+    opacity: 1;
+    transition: opacity .25s ease-in-out, right .25s ease-in-out, left .25s ease-in-out, min-height .25s ease-in-out;
+}
+
+.usage-list-overlay--hidden .usage-list-overlay__content {
+    opacity: 0;
+    left: 50%;
+    right: 50%;
+    min-height: 0;
+}
+
+.usage-list-overlay__close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+	<metadata>
+		<id>FTWCAB.ContentReport</id>
+		<version>0.1.40</version>
+		<title>Optimizely CMS ContentReport</title>
+		<authors>Jim Hausel</authors>
+		<owners>FTW Consulting</owners>
+		<description>Optimizely Plugin/report listing content by type</description>
+		<summary>Content Report for Optimizely CMS</summary>
+		<releaseNotes></releaseNotes>
+		<copyright>Copyright 2024</copyright>
+		<tags>Optimizely EpiServer Content Report</tags>
+		<projectUrl>https://github.com/jiha-ftw/FTWCAB.ContentReport</projectUrl>
+		<readme>readme.md</readme>
+		<license type="expression">MIT</license>
+		<dependencies>
+			<group targetFramework="net8.0">
+				<frameworkReference name="Microsoft.AspNetCore.App" />
+				<dependency id="EPiServer.CMS.UI.Core" version="[12.10.0,)" />
+			</group>
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="build\FTWCAB.ContentReport.targets" target="build\FTWCAB.ContentReport.targets" />
+		<file src="FTWCAB.ContentReport.zip" target="resource\FTWCAB.ContentReport\FTWCAB.ContentReport.zip" />
+		<file src="bin\Release\net8.0\FTWCAB.ContentReport.dll" target="lib\net8.0\" />
+		<file src="bin\Release\net8.0\FTWCAB.ContentReport.Services.dll" target="lib\net8.0\" />
+		<file src="bin\Release\net8.0\FTWCAB.ContentReport.Models.dll" target="lib\net8.0\" />
+		<file src="..\readme.md" target="readme.md" />
+	</files>
+</package>

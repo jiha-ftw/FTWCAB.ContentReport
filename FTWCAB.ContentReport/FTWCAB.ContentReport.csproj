@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+		<NuspecFile>FTWCAB.ContentReport.nuspec</NuspecFile>
+	</PropertyGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="ClientResources\" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.10.0,)" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\FTWCAB.ContentReport.Models\FTWCAB.ContentReport.Models.csproj" />
+		<ProjectReference Include="..\FTWCAB.ContentReport.Services\FTWCAB.ContentReport.Services.csproj" />
+	</ItemGroup>
+
+</Project>
