@@ -1,5 +1,9 @@
 ## Optimizely CMS 12 Content Report
 
+```
+Install-Package FTWCAB.ContentReport
+```
+
 Install and navigate to Add-ons / Content Usages within CMS.
 Pick a content type and see instances of the selected type as well as usages of those instances.
 
