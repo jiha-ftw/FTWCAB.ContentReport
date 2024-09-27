@@ -1,16 +1,15 @@
-<Project>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<ItemGroup>
 		<ModuleFiles Include="$(MSBuildThisFileDirectory)..\resource\**\*.*"/>
 	</ItemGroup>
 
-	<Target
-	  Name="CopyModuleFiles"
-	  BeforeTargets="Build"
-	  Inputs="@(ModuleFiles)"
-	  Outputs="@(ModuleFiles -> '$(MSBuildProjectDirectory)\modules\_protected\%(RecursiveDir)%(Filename)%(extension)')">
+	<Target Name="CopyModuleFiles" BeforeTargets="Build">
 		<Message Text="Copying files: @(ModuleFiles)" Importance="high" />
+
+		<MakeDir Directories="$(MSBuildProjectDirectory)\modules\_protected\FTWCAB.ContentReport" />
+
 		<Copy
 		  SourceFiles="@(ModuleFiles)"
-		  DestinationFiles="@(ModuleFiles -> '$(MSBuildProjectDirectory)\modules\_protected\%(RecursiveDir)%(Filename)%(extension)')" />
+		  DestinationFiles="@(ModuleFiles -> '$(MSBuildProjectDirectory)\modules\_protected\%(RecursiveDir)%(Filename)%(Extension)')" />
 	</Target>
 </Project>
