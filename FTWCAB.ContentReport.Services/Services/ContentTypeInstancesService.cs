@@ -13,15 +13,18 @@ namespace FTWCAB.ContentReport.Services
         private readonly IContentLoaderWrapper contentLoaderWrapper;
         private readonly IContentModelUsage contentModelUsage;
         private readonly IContentTypeRepository contentTypeRepository;
+        private readonly IContentVersionRepository contentVersionRepository;
 
         public ContentTypeInstancesService(
             IContentLoaderWrapper contentLoaderWrapper,
             IContentModelUsage contentModelUsage,
-            IContentTypeRepository contentTypeRepository)
+            IContentTypeRepository contentTypeRepository,
+            IContentVersionRepository contentVersionRepository)
         {
             this.contentLoaderWrapper = contentLoaderWrapper;
             this.contentModelUsage = contentModelUsage;
             this.contentTypeRepository = contentTypeRepository;
+            this.contentVersionRepository = contentVersionRepository;
         }
 
         public ContentInstancesModel GetInstances(int contentTypeId, int page, int pageSize)
@@ -31,11 +34,7 @@ namespace FTWCAB.ContentReport.Services
             var contentType = contentTypes[contentTypeId];
             var contentItems = contentType is null
                 ? Enumerable.Empty<IContent>().ToList()
-                : contentModelUsage.ListContentOfContentType(contentType)
-                    .Select(contentUsage => contentLoaderWrapper.Get<IContent>(contentUsage.ContentLink.ToReferenceWithoutVersion()))
-                    .Where(content => content?.IsPublished() ?? false)
-                    .Cast<IContent>()
-                    .DistinctBy(content => content.ContentLink.ID)
+                : GetLatestContentUsageOfType(contentType)
                     .OrderBy(contentUsage => contentUsage.Name)
                     .ToList();
 
@@ -60,6 +59,24 @@ namespace FTWCAB.ContentReport.Services
                     };
                 }).ToList(),
             };
+        }
+
+        private IEnumerable<IContent> GetLatestContentUsageOfType(ContentType contentType)
+        {
+            var allContentReferences = contentModelUsage.ListContentOfContentType(contentType);
+
+            var allContentItems = allContentReferences
+                .Select(cr => contentLoaderWrapper.Get<IContent>(cr.ContentLink))
+                .Where(content => content != null);
+
+            var latestPublishedContentItems = allContentItems
+                .Where(content =>
+                {
+                    var publishedVersion = contentVersionRepository.LoadPublished(content.ContentLink);
+                    return publishedVersion != null && publishedVersion.ContentLink == content.ContentLink;
+                });
+
+            return latestPublishedContentItems!;
         }
 
         private ContentReference? GetParentLink(IContent content)
