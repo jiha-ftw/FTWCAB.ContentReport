@@ -1,15 +1,33 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<Target Name="CopyModuleFilesForBuild" BeforeTargets="Build">
+		<Message Text="Copying files for Build: @(ModuleFiles)" Importance="high" />
+		<MakeDir Directories="$(MSBuildProjectDirectory)\modules\_protected\FTWCAB.ContentReport" />
+		<Copy
+            SourceFiles="@(ModuleFiles)"
+            DestinationFiles="@(ModuleFiles -> '$(MSBuildProjectDirectory)\modules\_protected\%(RecursiveDir)%(Filename)%(Extension)')" />
+	</Target>
+
+	<Target Name="CopyModuleFilesForPublish" BeforeTargets="Publish">
+		<Message Text="Copying files for Publish: @(ModuleFiles)" Importance="high" />
+		<MakeDir Directories="$(PublishDir)modules\_protected\FTWCAB.ContentReport" />
+		<Copy
+            SourceFiles="@(ModuleFiles)"
+            DestinationFiles="@(ModuleFiles -> '$(PublishDir)modules\_protected\%(RecursiveDir)%(Filename)%(Extension)')" />
+	</Target>
+
+	<Target Name="EnsureFileInPublish" AfterTargets="CopyModuleFilesForPublish">
+		<MakeDir Directories="$(PublishDir)modules\_protected\FTWCAB.ContentReport" />
+		<ItemGroup>
+			<ResolvedFileToPublish Include="$(PublishDir)modules\_protected\FTWCAB.ContentReport\FTWCAB.ContentReport.zip">
+				<RelativePath>modules\_protected\FTWCAB.ContentReport\FTWCAB.ContentReport.zip</RelativePath>
+				<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+			</ResolvedFileToPublish>
+		</ItemGroup>
+	</Target>
+
 	<ItemGroup>
 		<ModuleFiles Include="$(MSBuildThisFileDirectory)..\resource\**\*.*"/>
 	</ItemGroup>
 
-	<Target Name="CopyModuleFiles" BeforeTargets="Build">
-		<Message Text="Copying files: @(ModuleFiles)" Importance="high" />
-
-		<MakeDir Directories="$(MSBuildProjectDirectory)\modules\_protected\FTWCAB.ContentReport" />
-
-		<Copy
-		  SourceFiles="@(ModuleFiles)"
-		  DestinationFiles="@(ModuleFiles -> '$(MSBuildProjectDirectory)\modules\_protected\%(RecursiveDir)%(Filename)%(Extension)')" />
-	</Target>
 </Project>
