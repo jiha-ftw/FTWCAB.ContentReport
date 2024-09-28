@@ -1,5 +1,5 @@
 import './usage-list.css';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { fetchContentTypeUsages } from '@/store/contentUsage';
 import Table from '@/components/table/table';
 import UsageListBody from './usage-list-body';
@@ -10,9 +10,18 @@ import { useAppSelector, useAppDispatch } from '@/hooks'
 const UsageList = () => {
     const dispatch = useAppDispatch();
     const [currentPage, setCurrentPage] = useState(0);
+    const selectedLanguage = useAppSelector(state => state.languages).selectedLanguage;
     const { usages, loaded, pages, totalCount, pageSize, selectedContentInstance } = useAppSelector(state => state.contentUsage);
 
-    const loadUsages = () => dispatch(fetchContentTypeUsages({ contentInstanceId: selectedContentInstance?.id, page: currentPage }));
+    const loadUsages = useCallback(() => {
+        dispatch(
+            fetchContentTypeUsages({
+                contentInstanceId: selectedContentInstance?.id,
+                languageId: selectedLanguage.id,
+                page: currentPage
+            })
+        );
+    });
 
     useEffect(() => {
         selectedContentInstance?.id && loadUsages();

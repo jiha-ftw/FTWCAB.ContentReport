@@ -19,15 +19,22 @@ namespace FTWCAB.ContentReport.Controllers
             [FromServices] IContentTypeInstancesService contentTypeInstancesService,
             [FromQuery] int contentTypeId,
             [FromQuery] int page,
-            [FromQuery] int pageSize)
-            => contentTypeInstancesService.GetInstances(contentTypeId, page, pageSize);
+            [FromQuery] int pageSize,
+            [FromQuery] string languageId)
+            => contentTypeInstancesService.GetInstances(contentTypeId, languageId, page, pageSize);
 
         [HttpGet]
         public ActionResult GetContentUsages(
             [FromServices] IContentInstanceUsageService contentInstanceUsageService,
             [FromQuery] int contentInstanceId,
             [FromQuery] int page,
-            [FromQuery] int pageSize) 
-            => Ok(contentInstanceUsageService.GetUsages(contentInstanceId, page, pageSize));
+            [FromQuery] int pageSize,
+            [FromQuery] string languageId) 
+            => Ok(contentInstanceUsageService.GetUsages(contentInstanceId, languageId, page, pageSize));
+
+        [HttpGet]
+        public ActionResult GetSiteLanguages(
+            [FromServices] ILanguageService languageService) 
+            => Ok(languageService.GetLanguages().ToList());
     }
 }

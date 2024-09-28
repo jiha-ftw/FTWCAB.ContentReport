@@ -1,17 +1,27 @@
 import './Header.css';
 import { useEffect } from 'react';
 import Select from 'react-select'
-import { ContentType } from '@/data/data';
+import { ContentType, Language } from '@/data/data';
 import { useAppSelector, useAppDispatch } from '@/hooks'
 import { fetchContentTypeGroups, setSelectedType } from '@/store/contentTypes'
+import { fetchLanguages, setSelectedLanguage } from '@/store/languages'
 
 const Header = () => {
   const dispatch = useAppDispatch();
   const contentTypeGroups = useAppSelector(state => state.contentTypes).types;
+  const languages = useAppSelector(state => state.languages).languages;
 
   useEffect(() => {
     dispatch(fetchContentTypeGroups());
+    dispatch(fetchLanguages());
   }, [dispatch])
+
+  useEffect(() => {
+    if (languages && languages.length) {
+      console.log(languages.find(l => l.selected))
+      dispatch(setSelectedLanguage(languages.find(l => l.selected)))
+    }
+  }, [languages]);
 
   return (
     <div className="epi-main-header Header">
@@ -19,6 +29,16 @@ const Header = () => {
         Content Usages
       </header>
       <div style={{ width: '300px' }}>
+        <Select
+          className="Header__language-select"
+          isClearable
+          placeholder="Select language type"
+          getOptionLabel={(option: Language) => option.name}
+          getOptionValue={(option: Language) => option.id}
+          options={languages}
+          value={languages.find(l => l.selected)}
+          onChange={(l) => dispatch(setSelectedLanguage(l))}
+        />
         <Select
           isClearable
           placeholder="Select content type"

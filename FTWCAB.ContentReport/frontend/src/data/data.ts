@@ -28,6 +28,12 @@ export interface ContentUsage {
     readonly name: string;
 }
 
+export interface Language {
+    readonly id: string;
+    readonly name: string;
+    readonly selected: Boolean;
+}
+
 export interface ContentUsages {
     readonly usages: ContentUsage[];
     readonly totalCount: number;

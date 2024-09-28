@@ -1,9 +1,8 @@
 ﻿using FTWCAB.ContentReport.Models.Models.Api;
 
-namespace FTWCAB.ContentReport.Services.Interfaces
+namespace FTWCAB.ContentReport.Services.Interfaces;
+
+public interface IContentInstanceUsageService
 {
-    public interface IContentInstanceUsageService
-    {
-        ContentUsagesModel GetUsages(int contentInstanceId, int page, int pageSize);
-    }
+    ContentUsagesModel GetUsages(int contentInstanceId, string languageId, int page, int pageSize);
 }

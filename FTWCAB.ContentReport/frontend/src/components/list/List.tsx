@@ -1,5 +1,5 @@
 import './list.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useAppSelector, useAppDispatch } from '@/hooks'
 import { fetchContentTypeInstances } from '@/store/contentInstance';
 import { setSelectedContentInstance } from '@/store/contentUsage'
@@ -12,18 +12,27 @@ const List = () => {
   const dispatch = useAppDispatch();
   const [currentPage, setCurrentPage] = useState(0);
   const selectedType = useAppSelector(state => state.contentTypes).selectedType;
+  const selectedLanguage = useAppSelector(state => state.languages).selectedLanguage;
   const { instances, loaded, pages, totalCount, pageSize } = useAppSelector(state => state.contentInstances);
 
-  const loadInstances = () => dispatch(fetchContentTypeInstances({ contentTypeId: selectedType!.id, page: currentPage }));
+  const loadInstances = useCallback(() => {
+    dispatch(
+      fetchContentTypeInstances({
+        contentTypeId: selectedType!.id,
+        page: currentPage,
+        languageId: selectedLanguage?.id || '',
+      })
+    );
+  }, [selectedType, selectedLanguage, currentPage]);
 
   useEffect(() => {
     setCurrentPage(0);
   }, [selectedType]);
 
   useEffect(() => {
-    selectedType && loadInstances();
+    selectedType && selectedLanguage && loadInstances();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedType, currentPage])
+  }, [selectedType, selectedLanguage, currentPage])
 
   if (!selectedType || !loaded) return <></>;
 

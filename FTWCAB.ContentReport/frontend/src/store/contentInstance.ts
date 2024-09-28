@@ -22,16 +22,24 @@ const fetchContentTypeInstances = createAsyncThunk
     <ContentInstances, {
         contentTypeId: Number;
         page: Number;
-    }>('contentTypes/fetchContentTypeInstances', async ({ contentTypeId, page }, { getState }) => {
+        languageId: String;
+    }>('contentTypes/fetchContentTypeInstances', async ({ contentTypeId, page, languageId }, { getState }) => {
         const { contentInstances: { pageSize } } = getState() as RootState;
-        const response = await fetch(`/EPiServer/FTWCAB.ContentReport/ContentUsagesApi/GetContentInstances?contentTypeId=${contentTypeId}&page=${page}&pageSize=${pageSize}`);
+        const params = new URLSearchParams({
+            'contentTypeId': contentTypeId.toString(),
+            'languageId': languageId.toString(),
+            'page': page.toString(),
+            'pageSize': pageSize.toString(),
+        });
+
+        const response = await fetch(`/EPiServer/FTWCAB.ContentReport/ContentUsagesApi/GetContentInstances?${params.toString()}`);
         return (await response.json());
     });
 
 export const contentInstancesSlice = createSlice({
     name: 'contentInstance',
     initialState,
-    reducers: { },
+    reducers: {},
     extraReducers: (builder) => {
         builder.addCase(fetchContentTypeInstances.pending, (state, action) => {
             state.loaded = false;

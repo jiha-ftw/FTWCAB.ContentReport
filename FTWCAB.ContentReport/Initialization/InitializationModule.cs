@@ -5,6 +5,7 @@ using EPiServer.Shell.Modules;
 using FTWCAB.ContentReport.Authorization;
 using FTWCAB.ContentReport.Services;
 using FTWCAB.ContentReport.Services.Interfaces;
+using FTWCAB.ContentReport.Services.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FTWCAB.ContentReport.Extensions
@@ -21,6 +22,7 @@ namespace FTWCAB.ContentReport.Extensions
                 .AddSingleton<IContentTypeInstancesService, ContentTypeInstancesService>()
                 .AddSingleton<IContentLoaderWrapper, ContentLoaderWrapper>()
                 .AddSingleton<IContentInstanceUsageService, ContentInstanceUsageService>()
+                .AddSingleton<ILanguageService, LanguageService>()
                 .Configure<ProtectedModuleOptions>(o =>
                 {
                     var moduleName = typeof(InitializationModule).Assembly.GetName().Name;

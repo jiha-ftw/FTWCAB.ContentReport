@@ -24,9 +24,16 @@ const fetchContentTypeUsages = createAsyncThunk
     <ContentUsages, {
         contentInstanceId: Number;
         page: Number;
-    }>('contentTypes/fetchContentInstanceUsages', async ({ contentInstanceId, page }, { getState }) => {
+        languageId: String;
+    }>('contentTypes/fetchContentInstanceUsages', async ({ contentInstanceId, languageId, page }, { getState }) => {
         const { contentUsage: { pageSize } } = getState() as RootState;
-        const response = await fetch(`/EPiServer/FTWCAB.ContentReport/ContentUsagesApi/GetContentUsages?contentInstanceId=${contentInstanceId}&page=${page}&pageSize=${pageSize}`);
+        const params = new URLSearchParams({
+            'contentInstanceId': contentInstanceId.toString(),
+            'languageId': languageId.toString(),
+            'page': page.toString(),
+            'pageSize': pageSize.toString(),
+        });
+        const response = await fetch(`/EPiServer/FTWCAB.ContentReport/ContentUsagesApi/GetContentUsages?${params.toString()}`);
         return (await response.json());
     });
 
