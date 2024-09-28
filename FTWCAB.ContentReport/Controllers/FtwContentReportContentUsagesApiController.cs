@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FTWCAB.ContentReport.Controllers
 {
-    [Authorize(Roles = "CmsAdmins")]
+    [Authorize(Constants.Autorization.PolicyName)]
     public class FtwContentReportContentUsagesApiController : Controller
     {
         [HttpGet]
