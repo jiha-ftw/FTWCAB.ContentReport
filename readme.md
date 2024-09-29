@@ -9,6 +9,10 @@ Pick a content type and see instances of the selected type as well as usages of 
 
 ### Version history
 
+#### 0.2.11
+* Edit links language parameter
+* Language selector bug fix
+ 
 #### 0.2.10
 * Language selector
 
