@@ -27,6 +27,7 @@ export const languagesSlice = createSlice({
     },
     extraReducers: (builder) => builder.addCase(fetchLanguages.fulfilled, (state, action) => {
         state.languages = action.payload;
+        state.selectedLanguage = state.languages.find(l => l.selected) || null;
     }),
 })
 

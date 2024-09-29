@@ -33,8 +33,9 @@ const List = () => {
     selectedType && selectedLanguage && loadInstances();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedType, selectedLanguage, currentPage])
-
-  if (!selectedType || !loaded) return <></>;
+  
+  if (!selectedType || !selectedLanguage) return <>Select language and content type to display usage.</>
+  if (!loaded) return <></>;
 
   return (
     <div className="list">

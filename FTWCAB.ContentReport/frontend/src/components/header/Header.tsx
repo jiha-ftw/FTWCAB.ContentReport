@@ -9,19 +9,12 @@ import { fetchLanguages, setSelectedLanguage } from '@/store/languages'
 const Header = () => {
   const dispatch = useAppDispatch();
   const contentTypeGroups = useAppSelector(state => state.contentTypes).types;
-  const languages = useAppSelector(state => state.languages).languages;
+  const { languages, selectedLanguage } = useAppSelector(state => state.languages);
 
   useEffect(() => {
     dispatch(fetchContentTypeGroups());
     dispatch(fetchLanguages());
-  }, [dispatch])
-
-  useEffect(() => {
-    if (languages && languages.length) {
-      console.log(languages.find(l => l.selected))
-      dispatch(setSelectedLanguage(languages.find(l => l.selected)))
-    }
-  }, [languages]);
+  }, [dispatch]);
 
   return (
     <div className="epi-main-header Header">
@@ -36,7 +29,7 @@ const Header = () => {
           getOptionLabel={(option: Language) => option.name}
           getOptionValue={(option: Language) => option.id}
           options={languages}
-          value={languages.find(l => l.selected)}
+          value={selectedLanguage}
           onChange={(l) => dispatch(setSelectedLanguage(l))}
         />
         <Select
