@@ -30,22 +30,25 @@ namespace FTWCAB.ContentReport.Services
                 .OrderBy(content => content.Name)
                 .ToList();
 
-            return new ContentUsagesModel
+            var usages = new ContentUsagesModel
             {
                 Pages = usageParentContentItems.Count > 0 ? (int)Math.Ceiling(usageParentContentItems.Count / (double)pageSize) : 0,
                 TotalCount = usageParentContentItems.Count,
                 Usages = usageParentContentItems
                     .Skip(page * pageSize)
                     .Take(pageSize)
-                    .Select(content => { 
-                    return new ContentUsageModel
-                    { 
-                        EditLink = PageEditing.GetEditUrl(content.ContentLink),
-                        Id = content.ContentLink.ID,
-                        Name = content.Name,
-                    };
-                })
+                    .Select(content => 
+                        new ContentUsageModel
+                        { 
+                            EditLink = PageEditing.GetEditUrlForLanguage(content.ContentLink, languageId),
+                            Id = content.ContentLink.ID,
+                            Name = content.Name,
+                        }
+                    )
+                    .ToList()
             };
+
+            return usages;
         }
     }
 }

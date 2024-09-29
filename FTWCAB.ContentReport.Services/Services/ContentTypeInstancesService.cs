@@ -53,7 +53,7 @@ public class ContentTypeInstancesService : IContentTypeInstancesService
                     EditLink = PageEditing.GetEditUrl(content.ContentLink),
                     ParentName = parentContent?.Name,
                     ParentContentTypeName = parentContentType?.LocalizedName,
-                    ParentEditLink = parentLink is not null ? PageEditing.GetEditUrl(parentLink) : null
+                    ParentEditLink = parentLink is not null ? PageEditing.GetEditUrlForLanguage(parentLink, languageId) : null
                 };
             }).ToList(),
         };
