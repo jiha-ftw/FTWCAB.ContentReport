@@ -9,6 +9,9 @@ Pick a content type and see instances of the selected type as well as usages of 
 
 ### Version history
 
+#### 0.2.13
+* Update bundle files
+
 #### 0.2.11
 * Edit links language parameter
 * Language selector bug fix
