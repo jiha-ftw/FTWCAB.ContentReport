@@ -31,7 +31,7 @@ If not run, the default role is `CmsAdmins`.
 * Adapt targets file to work/include zip file to modules\_protected directory when publishing
 
 ### Overview, listing instances of a selected content type
-![Overview for selected content type](https://www.ftwconsulting.se/img/scr3.png)
+![Overview for selected content type](https://raw.githubusercontent.com/jiha-ftw/FTWCAB.ContentReport/master/.scr/scr3.png)
 
 ### Usages of a specific instance of the content type
-![Usages of a specific instance of the content type](https://www.ftwconsulting.se/img/scr4.png)
+![Usages of a specific instance of the content type](https://raw.githubusercontent.com/jiha-ftw/FTWCAB.ContentReport/master/.scr/scr4.png)
